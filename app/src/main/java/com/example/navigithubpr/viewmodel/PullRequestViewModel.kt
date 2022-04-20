@@ -3,7 +3,7 @@ package com.example.navigithubpr.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.navigithubpr.di.ApiComponent
+import com.example.navigithubpr.di.DaggerApiComponent
 import com.example.navigithubpr.model.PullRequest
 import com.example.navigithubpr.model.PullRequestService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,17 +39,19 @@ class PullRequestViewModel : ViewModel() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<PullRequest>>(){
-                    override fun onSuccess(value: List<PullRequest>?) {
-                        pullRequestList.value = value
+
+                    override fun onSuccess(t: List<PullRequest>) {
+                        pullRequestList.value = t
                         pullRequestLoadError.value = false
                         loading.value = false
                     }
 
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         Log.e("ErrorData",e.toString())
                         pullRequestLoadError.value = true
                         loading.value = false
                     }
+
                 }))
     }
 

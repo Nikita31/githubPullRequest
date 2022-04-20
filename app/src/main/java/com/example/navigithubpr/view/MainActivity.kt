@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         viewModel = ViewModelProviders.of(this).get(PullRequestViewModel::class.java)
 
         viewModel.refresh()
