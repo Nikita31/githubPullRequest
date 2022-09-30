@@ -9,11 +9,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
-          regex: '^[MXDIGIWAL-\d*] - '
-          min_length: 12 
-          allowed_prefixes: 'feature,fix,JIRA'
-          github_token: ${{ github.token }} # Default: ${{ github.token }}
+         repo-token: ${{ secrets.GITHUB_TOKEN }}
+         issue-close-message: "@${issue.user.login} this issue was automatically closed because it matched a spam regex"
+         issue-pattern: '^[MXDIGIWAL-\d*] - '
       - run: npm install -g bats
       - run: bats -v
       
