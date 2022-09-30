@@ -12,9 +12,9 @@ jobs:
           node-version: 12
           pattern: '^[MXDIGIWAL-\d*] - '
           min_length: 12 # Min length of the title
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
+      - run: npm install -g bats
+      - run: bats -v
+      
 
 
 
