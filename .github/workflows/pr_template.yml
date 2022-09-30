@@ -8,10 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+      - uses: Nikita31/githubPullRequest@main
         with:
           node-version: 12
-          pattern: '^[MXDIGIWAL-\d*] - '
-          min_length: 12 # Min length of the title
+          regex: '^[MXDIGIWAL-\d*] - '
+          min_length: 12 
+          allowed_prefixes: 'feature,fix,JIRA'
+          github_token: ${{ github.token }} # Default: ${{ github.token }}
       - run: npm install -g bats
       - run: bats -v
       
