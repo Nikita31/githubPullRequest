@@ -1,29 +1,20 @@
-name: Pull Request Title Check Lint
-
+name: Node Continuous Integration
 on:
   pull_request:
-    types: ['opened', 'edited', 'reopened', 'synchronize']
-
+    branches: [ main ]
 jobs:
-  title:
-    name: ticket check
+  test_pull_request:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check for ticket
-      - uses: actions/checkout@v3
-      - uses: actions/setup-nodes@v3
-      - uses: DigiWallet/ewallet-android-sdk@test_sonar
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
-           # Match pull request titles in the form UI-1234 - Message.
-           node-version: '14'
-           pattern: '^[MXDIGIWAL-\d*] - '
-           min_length: 12 # Min length of the title
-           max_length: 1000 # Max length of the title
-           github_token: ${{ github.token }} # Default: ${{ github.token }}
-      - run: npm install -g bats
-      - run: bats -v
-
+          node-version: 12
+          pattern: '^[MXDIGIWAL-\d*] - '
+          min_length: 12 # Min length of the title
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
 
 
 
